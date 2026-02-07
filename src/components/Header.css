@@ -508,6 +508,32 @@ body::after {
   padding-left: 0;
 }
 
+.status-section {
+  background: rgba(0, 255, 0, 0.02);
+  border: 1px solid var(--primary);
+  padding: var(--spacing-lg);
+  border-radius: 4px;
+}
+
+.status-section h3 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 0 10px var(--accent);
+}
+
+.status-embeds {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.status-embeds img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 /* ============================================
    PROJECTS SECTION
    ============================================ */

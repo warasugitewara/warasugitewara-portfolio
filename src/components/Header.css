@@ -134,28 +134,93 @@ body::after {
   gap: var(--spacing-lg);
 }
 
-.lang-buttons {
-  display: flex;
-  gap: var(--spacing-sm);
+.lang-selector {
+  position: relative;
+  display: inline-block;
 }
 
-.lang-btn {
+.lang-dropdown-btn {
   padding: var(--spacing-xs) var(--spacing-md);
   background: transparent;
-  border: 1px solid var(--text-secondary);
+  border: 2px solid var(--primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  border-radius: 4px;
+}
+
+.lang-dropdown-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px var(--accent);
+  background: rgba(255, 0, 255, 0.05);
+}
+
+.lang-flag {
+  font-size: 1.2rem;
+}
+
+.lang-label {
+  min-width: 150px;
+  text-align: left;
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(10, 10, 21, 0.95));
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.05);
+  backdrop-filter: blur(10px);
+  z-index: 1001;
+  min-width: 200px;
+  padding: var(--spacing-sm) 0;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.lang-dropdown-item {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-md);
+  background: transparent;
+  border: none;
   color: var(--text-secondary);
   cursor: pointer;
   font-family: 'Courier New', monospace;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
   transition: var(--transition);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-align: left;
 }
 
-.lang-btn:hover {
-  border-color: var(--accent);
+.lang-dropdown-item:hover {
+  background: rgba(255, 0, 255, 0.1);
   color: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+
+.lang-dropdown-item.active {
+  background: rgba(0, 255, 0, 0.1);
+  color: var(--primary);
+  border-left: 2px solid var(--primary);
+  padding-left: calc(var(--spacing-md) - 2px);
+  text-shadow: 0 0 10px var(--primary);
+}
+
+.lang-name {
+  min-width: 140px;
+  text-align: left;
 }
 
 .lang-btn.active {

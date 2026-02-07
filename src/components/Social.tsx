@@ -13,8 +13,8 @@ export default function Social() {
 
   const socialLinks: SocialLink[] = [
     { icon: <FaGithub />, label: 'GitHub', url: 'https://github.com/warasugitewara' },
-    { icon: <FaTwitter />, label: 'Twitter', url: 'https://twitter.com' },
-    { icon: <FaDiscord />, label: 'Discord', url: 'https://discord.com' },
+    { icon: <FaTwitter />, label: 'X', url: 'https://x.com/Warasg_Parasite' },
+    { icon: <FaDiscord />, label: 'Discord', url: 'https://discord.com/users/811515262238064640' },
     { icon: <FaLinkedin />, label: 'LinkedIn', url: 'https://linkedin.com' },
   ];
 

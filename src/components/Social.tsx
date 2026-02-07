@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { FaGithub, FaTwitter, FaDiscord } from 'react-icons/fa';
+import { FaGithub, FaTwitter, FaDiscord, FaSteam } from 'react-icons/fa';
 
 interface SocialLink {
   icon: React.ReactNode;
@@ -15,6 +15,7 @@ export default function Social() {
     { icon: <FaGithub />, label: 'GitHub', url: 'https://github.com/warasugitewara' },
     { icon: <FaTwitter />, label: 'X', url: 'https://x.com/Warasg_Parasite' },
     { icon: <FaDiscord />, label: 'Discord', url: 'https://discord.com/users/811515262238064640' },
+    { icon: <FaSteam />, label: 'Steam', url: 'https://steamcommunity.com/id/WASG777/' },
   ];
 
   const containerVariants = {
@@ -65,6 +66,31 @@ export default function Social() {
             </motion.a>
           ))}
         </div>
+
+        <motion.div 
+          className="status-display"
+          variants={itemVariants}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="status-embeds-wrapper">
+            <img 
+              src="https://lanyard.cnrad.dev/api/811515262238064640?idleMessage=Coding%20or%20Building" 
+              alt="Discord Status"
+              className="status-image"
+              loading="lazy"
+            />
+          </div>
+          <div className="counter-embeds-wrapper">
+            <img 
+              src="https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" 
+              alt="Visitor Counter"
+              className="counter-image"
+              loading="lazy"
+            />
+          </div>
+        </motion.div>
       </div>
     </motion.section>
   );

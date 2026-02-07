@@ -3,6 +3,20 @@
 🌐 **Live Site**: https://wc.f5.si  
 🔗 **GitHub**: https://github.com/warasugitewara
 
+---
+
+## 📊 Status & Visitor Counter
+
+<div align="center">
+
+[![Discord Status](https://lanyard.cnrad.dev/api/811515262238064640?idleMessage=Coding%20or%20Building)](https://discord.com/users/811515262238064640)
+
+[![Visitor Counter](https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto)](https://count.getloli.com/@warasite)
+
+</div>
+
+---
+
 ## 概要
 
 次世代の自己紹介サイト。React + TypeScript + Framer Motion による高速・美しい・インタラクティブなポートフォリオサイト。

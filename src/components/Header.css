@@ -544,6 +544,98 @@ body::after {
   gap: var(--spacing-md);
 }
 
+.skills-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.skill-category {
+  background: rgba(0, 255, 0, 0.03);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.05), inset 0 0 20px rgba(0, 255, 0, 0.02);
+}
+
+.skill-category:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.05);
+  background: rgba(255, 0, 255, 0.05);
+}
+
+.category-title {
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-shadow: 0 0 10px var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.category-icon {
+  font-size: 1.5rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.skill-bar-wrapper {
+  cursor: pointer;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.skill-name {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.skill-icon {
+  font-size: 1.1rem;
+}
+
+.skill-level {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--primary);
+}
+
+.skill-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 3px;
+  box-shadow: 0 0 15px var(--primary), inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
 .skill-item {
   background: rgba(0, 255, 0, 0.05);
   border: 1px solid var(--primary);
@@ -838,6 +930,10 @@ footer p {
 @media (max-width: 768px) {
   .hero-grid,
   .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-categories {
     grid-template-columns: 1fr;
   }
 

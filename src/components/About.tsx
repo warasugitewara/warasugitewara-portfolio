@@ -24,11 +24,51 @@ export default function About() {
     },
   };
 
-  const skills = [
-    { title: t('skill_languages'), items: 'Java, Python, TypeScript, JavaScript, Lua' },
-    { title: t('skill_web'), items: 'React, Node.js, Express, HTML/CSS' },
-    { title: t('skill_gamedev'), items: 'Minecraft Plugins, Quilt Mods, Paper Server' },
-    { title: t('skill_urban'), items: 'Minecraft Urban Planning, 2D City Design' },
+  const skillsData = [
+    {
+      category: t('skill_languages'),
+      icon: '💻',
+      skills: [
+        { name: 'Java', proficiency: 85, icon: '☕' },
+        { name: 'Python', proficiency: 80, icon: '🐍' },
+        { name: 'TypeScript', proficiency: 85, icon: '📘' },
+        { name: 'JavaScript', proficiency: 80, icon: '⚡' },
+        { name: 'Lua', proficiency: 75, icon: '🌙' },
+        { name: 'SQL', proficiency: 75, icon: '🗄️' },
+        { name: 'C#', proficiency: 70, icon: '🟦' },
+        { name: 'Bash/Shell', proficiency: 70, icon: '🐚' },
+      ]
+    },
+    {
+      category: t('skill_web'),
+      icon: '🌐',
+      skills: [
+        { name: 'React', proficiency: 85, icon: '⚛️' },
+        { name: 'Node.js', proficiency: 80, icon: '🟢' },
+        { name: 'Express', proficiency: 75, icon: '🚂' },
+        { name: 'HTML/CSS', proficiency: 90, icon: '🎨' },
+        { name: 'Vite', proficiency: 80, icon: '⚡' },
+      ]
+    },
+    {
+      category: t('skill_gamedev'),
+      icon: '🎮',
+      skills: [
+        { name: 'Minecraft Plugins', proficiency: 90, icon: '⛏️' },
+        { name: 'Quilt Mods', proficiency: 85, icon: '🧩' },
+        { name: 'Paper Server', proficiency: 80, icon: '📜' },
+        { name: 'Game Design', proficiency: 75, icon: '🎯' },
+      ]
+    },
+    {
+      category: t('skill_urban'),
+      icon: '🏙️',
+      skills: [
+        { name: 'Minecraft Urban Planning', proficiency: 90, icon: '🏗️' },
+        { name: '2D City Design', proficiency: 85, icon: '🗺️' },
+        { name: 'Architecture', proficiency: 80, icon: '🏛️' },
+      ]
+    },
   ];
 
   return (
@@ -51,15 +91,44 @@ export default function About() {
 
           <motion.div className="skills-section" variants={itemVariants}>
             <h3>{t('skills_title')}</h3>
-            <div className="skills-grid">
-              {skills.map((skill, idx) => (
+            <div className="skills-categories">
+              {skillsData.map((category, idx) => (
                 <motion.div
                   key={idx}
-                  className="skill-item"
-                  whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(255, 0, 255, 0.3)' }}
+                  className="skill-category"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
-                  <h4>{skill.title}</h4>
-                  <p>{skill.items}</p>
+                  <h4 className="category-title">
+                    <span className="category-icon">{category.icon}</span>
+                    {category.category}
+                  </h4>
+                  <div className="skills-list">
+                    {category.skills.map((skill, skillIdx) => (
+                      <motion.div
+                        key={skillIdx}
+                        className="skill-bar-wrapper"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <div className="skill-header">
+                          <span className="skill-name">
+                            <span className="skill-icon">{skill.icon}</span>
+                            {skill.name}
+                          </span>
+                          <span className="skill-level">{skill.proficiency}%</span>
+                        </div>
+                        <div className="skill-bar-bg">
+                          <motion.div
+                            className="skill-bar-fill"
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.proficiency}%` }}
+                            transition={{ duration: 0.8, delay: skillIdx * 0.05 }}
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
               ))}
             </div>

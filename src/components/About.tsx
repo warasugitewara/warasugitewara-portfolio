@@ -29,44 +29,44 @@ export default function About() {
       category: t('skill_languages'),
       icon: '💻',
       skills: [
-        { name: 'Java', proficiency: 85, icon: '☕' },
-        { name: 'Python', proficiency: 80, icon: '🐍' },
-        { name: 'TypeScript', proficiency: 85, icon: '📘' },
-        { name: 'JavaScript', proficiency: 80, icon: '⚡' },
-        { name: 'Lua', proficiency: 75, icon: '🌙' },
-        { name: 'SQL', proficiency: 75, icon: '🗄️' },
-        { name: 'C#', proficiency: 70, icon: '🟦' },
-        { name: 'Bash/Shell', proficiency: 70, icon: '🐚' },
+        { name: 'Java', icon: '☕' },
+        { name: 'Python', icon: '🐍' },
+        { name: 'TypeScript', icon: '📘' },
+        { name: 'JavaScript', icon: '⚡' },
+        { name: 'Lua', icon: '🌙' },
+        { name: 'SQL', icon: '🗄️' },
+        { name: 'C#', icon: '🟦' },
+        { name: 'Bash/Shell', icon: '🐚' },
       ]
     },
     {
       category: t('skill_web'),
       icon: '🌐',
       skills: [
-        { name: 'React', proficiency: 85, icon: '⚛️' },
-        { name: 'Node.js', proficiency: 80, icon: '🟢' },
-        { name: 'Express', proficiency: 75, icon: '🚂' },
-        { name: 'HTML/CSS', proficiency: 90, icon: '🎨' },
-        { name: 'Vite', proficiency: 80, icon: '⚡' },
+        { name: 'React', icon: '⚛️' },
+        { name: 'Node.js', icon: '🟢' },
+        { name: 'Express', icon: '🚂' },
+        { name: 'HTML/CSS', icon: '🎨' },
+        { name: 'Vite', icon: '⚡' },
       ]
     },
     {
       category: t('skill_gamedev'),
       icon: '🎮',
       skills: [
-        { name: 'Minecraft Plugins', proficiency: 90, icon: '⛏️' },
-        { name: 'Quilt Mods', proficiency: 85, icon: '🧩' },
-        { name: 'Paper Server', proficiency: 80, icon: '📜' },
-        { name: 'Game Design', proficiency: 75, icon: '🎯' },
+        { name: 'Minecraft Plugins', icon: '⛏️' },
+        { name: 'Quilt Mods', icon: '🧩' },
+        { name: 'Paper Server', icon: '📜' },
+        { name: 'Game Design', icon: '🎯' },
       ]
     },
     {
       category: t('skill_urban'),
       icon: '🏙️',
       skills: [
-        { name: 'Minecraft Urban Planning', proficiency: 90, icon: '🏗️' },
-        { name: '2D City Design', proficiency: 85, icon: '🗺️' },
-        { name: 'Architecture', proficiency: 80, icon: '🏛️' },
+        { name: 'Minecraft Urban Planning', icon: '🏗️' },
+        { name: '2D City Design', icon: '🗺️' },
+        { name: 'Architecture', icon: '🏛️' },
       ]
     },
   ];
@@ -104,29 +104,17 @@ export default function About() {
                     <span className="category-icon">{category.icon}</span>
                     {category.category}
                   </h4>
-                  <div className="skills-list">
+                  <div className="skills-tags">
                     {category.skills.map((skill, skillIdx) => (
-                      <motion.div
+                      <motion.span
                         key={skillIdx}
-                        className="skill-bar-wrapper"
-                        whileHover={{ scale: 1.05 }}
+                        className="skill-tag"
+                        whileHover={{ scale: 1.1, boxShadow: '0 0 20px rgba(0, 255, 0, 0.5)' }}
+                        whileTap={{ scale: 0.95 }}
                       >
-                        <div className="skill-header">
-                          <span className="skill-name">
-                            <span className="skill-icon">{skill.icon}</span>
-                            {skill.name}
-                          </span>
-                          <span className="skill-level">{skill.proficiency}%</span>
-                        </div>
-                        <div className="skill-bar-bg">
-                          <motion.div
-                            className="skill-bar-fill"
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.proficiency}%` }}
-                            transition={{ duration: 0.8, delay: skillIdx * 0.05 }}
-                          />
-                        </div>
-                      </motion.div>
+                        <span className="skill-tag-icon">{skill.icon}</span>
+                        {skill.name}
+                      </motion.span>
                     ))}
                   </div>
                 </motion.div>

@@ -870,6 +870,19 @@ body::after {
   box-shadow: 0 0 30px var(--accent);
 }
 
+.social-link:nth-child(4):hover {
+  border-color: #1b2838;
+  color: #00adee;
+  box-shadow: 0 0 30px rgba(0, 173, 238, 0.5);
+  background: rgba(27, 40, 56, 0.2);
+}
+
+.social-link:nth-child(4) {
+  border-color: #1b2838;
+  color: #00adee;
+  transition: var(--transition);
+}
+
 .social-link:hover::before {
   left: 0;
 }

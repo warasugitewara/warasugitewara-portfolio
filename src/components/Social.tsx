@@ -74,21 +74,25 @@ export default function Social() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <div className="status-embeds-wrapper">
-            <img 
-              src="https://lanyard.cnrad.dev/api/811515262238064640?idleMessage=Coding%20or%20Building" 
-              alt="Discord Status"
-              className="status-image"
-              loading="lazy"
-            />
-          </div>
-          <div className="counter-embeds-wrapper">
-            <img 
-              src="https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" 
-              alt="Visitor Counter"
-              className="counter-image"
-              loading="lazy"
-            />
+          <div className="embeds-container">
+            <div className="discord-wrapper">
+              <a href="https://discord.com/users/811515262238064640" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="https://lanyard.cnrad.dev/api/811515262238064640?theme=dark&bg=121212&borderRadius=12px&hideDecoration=false" 
+                  alt="Discord Status"
+                  className="discord-status-image"
+                  loading="lazy"
+                />
+              </a>
+            </div>
+            <div className="counter-wrapper">
+              <img 
+                src="https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" 
+                alt="Visitor Counter"
+                className="counter-image"
+                loading="lazy"
+              />
+            </div>
           </div>
         </motion.div>
       </div>

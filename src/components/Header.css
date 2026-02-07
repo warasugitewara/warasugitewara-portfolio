@@ -900,6 +900,74 @@ body::after {
 }
 
 /* ============================================
+   STATUS & EMBEDS DISPLAY
+   ============================================ */
+
+.status-display {
+  margin-top: var(--spacing-2xl);
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.embeds-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  flex-wrap: wrap;
+  padding: var(--spacing-lg) 0;
+}
+
+.discord-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}
+
+.discord-wrapper a {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.discord-wrapper a:hover {
+  transform: scale(1.02);
+}
+
+.discord-status-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.2));
+  transition: filter 0.3s ease;
+  display: block;
+}
+
+.discord-status-image:hover {
+  filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.4));
+}
+
+.counter-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.2));
+  transition: filter 0.3s ease;
+}
+
+.counter-image:hover {
+  filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.4));
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 
@@ -951,6 +1019,21 @@ footer p {
 
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .embeds-container {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .discord-wrapper,
+  .counter-wrapper {
+    width: 100%;
+  }
+
+  .discord-status-image,
+  .counter-image {
+    width: 100%;
   }
 
   .header-container {

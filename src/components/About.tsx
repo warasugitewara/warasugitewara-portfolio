@@ -33,10 +33,7 @@ export default function About() {
         { name: 'Python', icon: '🐍' },
         { name: 'TypeScript', icon: '📘' },
         { name: 'JavaScript', icon: '⚡' },
-        { name: 'Lua', icon: '🌙' },
-        { name: 'SQL', icon: '🗄️' },
         { name: 'C#', icon: '🟦' },
-        { name: 'Bash/Shell', icon: '🐚' },
       ]
     },
     {
@@ -47,7 +44,6 @@ export default function About() {
         { name: 'Node.js', icon: '🟢' },
         { name: 'Express', icon: '🚂' },
         { name: 'HTML/CSS', icon: '🎨' },
-        { name: 'Vite', icon: '⚡' },
       ]
     },
     {
@@ -55,7 +51,6 @@ export default function About() {
       icon: '🎮',
       skills: [
         { name: 'Minecraft Plugins', icon: '⛏️' },
-        { name: 'Quilt Mods', icon: '🧩' },
         { name: 'Paper Server', icon: '📜' },
         { name: 'Game Design', icon: '🎯' },
       ]
@@ -64,8 +59,7 @@ export default function About() {
       category: t('skill_urban'),
       icon: '🏙️',
       skills: [
-        { name: 'Minecraft Urban Planning', icon: '🏗️' },
-        { name: '2D City Design', icon: '🗺️' },
+        { name: 'Urban Planning', icon: '🏗️' },
         { name: 'Architecture', icon: '🏛️' },
       ]
     },

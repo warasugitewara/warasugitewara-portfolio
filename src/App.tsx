@@ -1,122 +1,84 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-
-interface GitHubUser {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  location: string;
-}
+import { useEffect } from 'react';
+import { useI18n } from './hooks/useI18n';
+import { Hero } from './components/Hero';
+import { About } from './components/About';
+import { Skills } from './components/Skills';
+import { Projects } from './components/Projects';
+import { Philosophy } from './components/Philosophy';
+import { Contact } from './components/Contact';
+import type { Language } from './types';
 
 function App() {
-  const [avatarUrl, setAvatarUrl] = useState<string>('')
-  const [gitHubUser, setGitHubUser] = useState<GitHubUser | null>(null)
+  const { lang, i18n, switchLanguage } = useI18n('ja');
 
-  // Fetch GitHub user data and set favicon
   useEffect(() => {
-    const fetchGitHubUser = async () => {
-      try {
-        const response = await fetch('https://api.github.com/users/warasugitewara')
-        const user: GitHubUser = await response.json()
-        setGitHubUser(user)
-        
-        if (user.avatar_url) {
-          setAvatarUrl(user.avatar_url)
-          
-          // Create rounded favicon from GitHub avatar
-          const img = new Image()
-          img.crossOrigin = 'anonymous'
-          img.onload = () => {
-            const canvas = document.createElement('canvas')
-            const size = 256
-            canvas.width = size
-            canvas.height = size
-            
-            const ctx = canvas.getContext('2d')
-            if (ctx) {
-              // Draw circle
-              ctx.beginPath()
-              ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
-              ctx.clip()
-              ctx.drawImage(img, 0, 0, size, size)
-              
-              const faviconDataUrl = canvas.toDataURL('image/png')
-              const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement
-              if (favicon) {
-                favicon.href = faviconDataUrl
-              }
-            }
-          }
-          img.src = user.avatar_url
-        }
-      } catch (error) {
-        console.error('Failed to fetch GitHub user:', error)
-      }
-    }
+    // Set document language
+    document.documentElement.lang = lang;
+  }, [lang]);
 
-    fetchGitHubUser()
-  }, [])
+  if (!i18n) {
+    return <div className="loading">Loading...</div>;
+  }
 
   return (
     <div className="app">
       <header className="header">
-        <div className="header-content">
-          <h1>.Warasugi</h1>
-          <a href="https://github.com/warasugitewara" target="_blank" rel="noopener noreferrer" className="gh-link">
-            GitHub
-          </a>
+        <div className="header-wrapper">
+          <div className="header-content">
+            <h1 className="header-title">
+              <a href="#" className="header-link">
+                warasugi
+              </a>
+            </h1>
+          </div>
+          <nav className="header-nav">
+            <a href="#about" className="nav-link">
+              {i18n.nav.about}
+            </a>
+            <a href="#skills" className="nav-link">
+              {i18n.nav.skills}
+            </a>
+            <a href="#projects" className="nav-link">
+              {i18n.nav.projects}
+            </a>
+            <a href="#philosophy" className="nav-link">
+              {i18n.nav.philosophy}
+            </a>
+            <a href="#contact" className="nav-link">
+              {i18n.nav.contact}
+            </a>
+            <div className="lang-switcher">
+              <button
+                className={`lang-btn ${lang === 'ja' ? 'active' : ''}`}
+                onClick={() => switchLanguage('ja')}
+              >
+                日本語
+              </button>
+              <button
+                className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+                onClick={() => switchLanguage('en')}
+              >
+                English
+              </button>
+            </div>
+          </nav>
         </div>
       </header>
 
       <main className="main">
-        <section className="hero">
-          {avatarUrl && (
-            <img src={avatarUrl} alt="Avatar" className="avatar" />
-          )}
-          <div className="hero-content">
-            <h2>{gitHubUser?.name || '.Warasugi'}</h2>
-            <p>{gitHubUser?.bio}</p>
-            {gitHubUser?.location && <p className="location">📍 {gitHubUser.location}</p>}
-          </div>
-        </section>
-
-        <section className="status">
-          <h3>Status</h3>
-          <div className="status-items">
-            <div className="status-item">
-              <span className="label">Discord</span>
-              <img 
-                src="https://lanyard.cnrad.dev/api/811515262238064640?idleMessage=Coding%20or%20Building" 
-                alt="Discord Status"
-                className="discord-status"
-              />
-            </div>
-            <div className="status-item">
-              <span className="label">Visitors</span>
-              <img 
-                src="https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" 
-                alt="Visitor Counter"
-                className="visitor-counter"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="links">
-          <h3>Links</h3>
-          <nav className="link-list">
-            <a href="https://github.com/warasugitewara" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://x.com/Warasg_Parasite" target="_blank" rel="noopener noreferrer">X</a>
-            <a href="https://discord.com/users/811515262238064640" target="_blank" rel="noopener noreferrer">Discord</a>
-          </nav>
-        </section>
+        <Hero i18n={i18n} />
+        <About i18n={i18n} />
+        <Skills i18n={i18n} />
+        <Projects i18n={i18n} />
+        <Philosophy i18n={i18n} />
+        <Contact i18n={i18n} />
       </main>
 
       <footer className="footer">
-        <p>© 2024 .Warasugi</p>
+        <p>{i18n.footer.copyright}</p>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

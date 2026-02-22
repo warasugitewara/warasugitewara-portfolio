@@ -1,0 +1,48 @@
+import { useEffect, useState } from 'react';
+import type { I18n, Skill } from '../types';
+
+interface SkillsProps {
+  i18n: I18n | null;
+}
+
+export const Skills = ({ i18n }: SkillsProps) => {
+  const [skills, setSkills] = useState<Skill[]>([]);
+
+  useEffect(() => {
+    const loadSkills = async () => {
+      try {
+        const response = await fetch('/data/skills.json');
+        const data = await response.json();
+        setSkills(data.skills);
+      } catch (error) {
+        console.error('Failed to load skills:', error);
+      }
+    };
+
+    loadSkills();
+  }, []);
+
+  if (!i18n) return null;
+
+  return (
+    <section id="skills" className="section skills">
+      <div className="section-container">
+        <h2 className="section-title">{i18n.skills.title}</h2>
+        <div className="skills-grid">
+          {skills.map((skill) => (
+            <div key={skill.category} className="skill-group">
+              <h3 className="skill-category">{skill.category}</h3>
+              <div className="skill-items">
+                {skill.items.map((item) => (
+                  <span key={item} className="skill-tag">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};

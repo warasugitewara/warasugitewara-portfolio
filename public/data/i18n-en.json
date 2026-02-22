@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "philosophy": "Philosophy",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "warasugi",
+    "subtitle": "CLI-focused engineer | Lightweight design | Infrastructure"
+  },
+  "about": {
+    "title": "About",
+    "description": "Information systems student based in Hokkaido. Focused on lightweight, high-performance systems and CLI tools."
+  },
+  "skills": {
+    "title": "Skills",
+    "languages": "Languages",
+    "tools": "Infrastructure & Tools",
+    "backend": "Backend & Systems",
+    "certifications": "Certifications"
+  },
+  "projects": {
+    "title": "Projects",
+    "pinned": "Pinned Repositories"
+  },
+  "philosophy": {
+    "title": "Development Philosophy"
+  },
+  "contact": {
+    "title": "Contact",
+    "github": "GitHub",
+    "twitter": "Twitter / X",
+    "discord": "Discord"
+  },
+  "footer": {
+    "copyright": "© 2026 warasugi. All rights reserved."
+  }
+}

@@ -459,6 +459,7 @@ a:hover {
   align-items: center;
   padding-top: 1rem;
   border-top: 1px solid rgba(0, 255, 136, 0.1);
+  gap: 1rem;
 }
 
 .project-language {
@@ -466,6 +467,30 @@ a:hover {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.project-updated {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.projects-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--color-neon-green);
+  font-size: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Philosophy section */

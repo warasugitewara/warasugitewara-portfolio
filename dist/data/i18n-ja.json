@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "about": "プロフィール",
+    "skills": "スキル",
+    "projects": "プロジェクト",
+    "philosophy": "開発哲学",
+    "contact": "連絡先"
+  },
+  "hero": {
+    "title": "warasugi",
+    "subtitle": "CLI志向エンジニア | 軽量設計 | インフラ"
+  },
+  "about": {
+    "title": "プロフィール",
+    "description": "北海道在住の情報系志望学生。軽量で高速なシステムとCLIツール開発に関心があります。"
+  },
+  "skills": {
+    "title": "スキル",
+    "languages": "プログラミング言語",
+    "tools": "インフラ・ツール",
+    "backend": "バックエンド・システム",
+    "certifications": "資格"
+  },
+  "projects": {
+    "title": "プロジェクト",
+    "pinned": "ピン固定リポジトリ"
+  },
+  "philosophy": {
+    "title": "開発哲学"
+  },
+  "contact": {
+    "title": "連絡先",
+    "github": "GitHub",
+    "twitter": "Twitter / X",
+    "discord": "Discord"
+  },
+  "footer": {
+    "copyright": "© 2026 warasugi. All rights reserved."
+  }
+}

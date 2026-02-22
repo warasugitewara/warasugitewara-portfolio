@@ -7,7 +7,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: false,
+    minify: 'esbuild',
+    cssCodeSplit: true,
+    cssMinify: true,
     rollupOptions: {
       output: {
         manualChunks: {

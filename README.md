@@ -1,65 +1,132 @@
-# .Warasugi Portfolio
+# warasugi - Portfolio
 
-シンプルで軽量なポートフォリオサイト。
+CLI-focused engineer. Lightweight systems, infrastructure design, and custom tools.
 
-🌐 **Live Site**: https://wc.f5.si  
+🌐 **Live Site**: https://warasugitewara.github.io/warasugi-portfolio/  
 🔗 **GitHub**: https://github.com/warasugitewara
 
 ---
 
-## ステータス & 訪問者
+## ✨ Features
 
-<div align="center">
+- **CLI-Oriented Design** - Terminal-inspired UI with boot animation
+- **Lightweight & Fast** - ~600KB JS (gzip: 96KB), optimized for performance
+- **Bilingual Support** - Japanese (日本語) / English with URL persistence
+- **Dark Theme** - Neon accents (#00ff88, #00ffff) with glitch effects
+- **GitHub API Integration** - Real-time project showcase from GitHub
+- **Responsive Design** - Mobile-first approach, works on all devices
+- **Minimal Dependencies** - React + TypeScript only, no heavy frameworks
+- **Accessible** - Proper semantic HTML, respects prefers-reduced-motion
 
-[![Discord Status](https://lanyard.cnrad.dev/api/811515262238064640?idleMessage=Coding%20or%20Building)](https://discord.com/users/811515262238064640)
+## 🛠️ Tech Stack
 
-[![Visitor Counter](https://count.getloli.com/@warasite?name=warasite&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto)](https://count.getloli.com/@warasite)
+- **Framework**: React 19 + TypeScript
+- **Build Tool**: Vite 7
+- **Styling**: CSS (NeoBrutalism design)
+- **API Data**: GitHub API + JSON static data
+- **i18n**: Custom hook with localStorage persistence
+- **Deployment**: GitHub Pages with GitHub Actions
 
-</div>
-
----
-
-## 特徴
-
-- ✨ ミニマルデザイン
-- 🟢 ネオン緑テーマ
-- 📱 レスポンシブ対応
-- ⚡ 軽量（JS: 547KB）
-- 🔗 Discord ステータス表示
-- 📊 訪問者カウンター
-- 🎯 GitHub プロファイル連携
-
-## 技術スタック
-
-- **フレームワーク**: React 19 + TypeScript
-- **ビルドツール**: Vite 7
-- **スタイル**: CSS (ネオンテーマ)
-- **デプロイ**: GitHub Pages
-
-## セットアップ
-
-```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # dist/ へ出力
-npm run preview  # プレビュー
-```
-
-## 構成
+## 📁 Project Structure
 
 ```
 src/
-├── App.tsx          # メインコンポーネント
-├── App.css          # スタイル
-├── main.tsx         # エントリーポイント
-└── index.css        # グローバルスタイル
+├── components/
+│   ├── Hero.tsx              # Welcome section with avatar
+│   ├── About.tsx             # Profile information
+│   ├── Skills.tsx            # Technical skills grid
+│   ├── Projects.tsx          # GitHub projects (API-driven)
+│   ├── Philosophy.tsx        # Development principles
+│   ├── Contact.tsx           # Social links
+│   └── BootAnimation.tsx     # Startup sequence
+├── hooks/
+│   └── useI18n.ts            # Multi-language hook
+├── types/
+│   └── index.ts              # TypeScript type definitions
+├── styles/
+│   └── main.css              # Global styles + animations
+├── App.tsx                   # Main app component
+└── main.tsx                  # Entry point
+
+public/data/
+├── profile.json              # User profile
+├── skills.json               # Skills data
+├── philosophy.json           # Development philosophy
+├── i18n-ja.json              # Japanese translations
+└── i18n-en.json              # English translations
 ```
 
-## デプロイメント
+## 🚀 Quick Start
 
-GitHub Pages への自動デプロイ。main ブランチへの push で自動更新されます。
+```bash
+# Install dependencies
+npm install
+
+# Development server (http://localhost:3000)
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📊 Performance
+
+- **Bundle Size**: ~547KB JS (gzip: 96KB)
+- **Initial Load**: ~1.5s on 3G
+- **Lighthouse Target**: 90+
+- **Optimizations**:
+  - esbuild minification
+  - CSS code splitting
+  - DNS prefetch for external APIs
+  - Lazy image loading
+  - Reduced motion support
+
+## 🌐 Multi-Language Support
+
+Supports Japanese (default) and English. Language preference is saved to localStorage.
+
+- `/data/i18n-ja.json` - Japanese
+- `/data/i18n-en.json` - English
+
+Switch language using the header language buttons.
+
+## 📦 Data Management
+
+All static data is stored as JSON files in `public/data/`:
+
+- **profile.json** - Basic profile, social links, education
+- **skills.json** - Technical skills categorized
+- **philosophy.json** - Development principles
+- **i18n-*.json** - Translations for all UI text
+
+GitHub API is called dynamically to fetch real project data.
+
+## 🎨 Design Philosophy
+
+- **Minimal** - Only necessary elements, no bloat
+- **Fast** - Optimized for edge and low-bandwidth connections
+- **Accessible** - Respects user preferences (reduced motion, dark mode)
+- **CLI-Friendly** - Terminal aesthetic, monospace fonts
+- **Infrastructure-First** - Built with DevOps mindset
+
+## 🔄 Continuous Deployment
+
+This project uses GitHub Actions for automatic deployment:
+
+1. Push to `main` branch
+2. GitHub Actions builds the project (`npm run build`)
+3. Output deployed to GitHub Pages
+4. Live at: https://warasugitewara.github.io/warasugi-portfolio/
+
+See `.github/workflows/deploy.yml` for details.
+
+## 📝 License
+
+MIT - Feel free to use as a template or reference.
 
 ---
 
-**Made with ❤️ from Hokkaido 🇯🇵**
-
+**Made with CLI tools in Hokkaido** 🇯🇵

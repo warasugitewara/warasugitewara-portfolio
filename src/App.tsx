@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useI18n } from './hooks/useI18n';
+import { BootAnimation } from './components/BootAnimation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
@@ -10,6 +11,7 @@ import type { Language } from './types';
 
 function App() {
   const { lang, i18n, switchLanguage } = useI18n('ja');
+  const [showBoot, setShowBoot] = useState(true);
 
   useEffect(() => {
     // Set document language
@@ -22,6 +24,7 @@ function App() {
 
   return (
     <div className="app">
+      {showBoot && <BootAnimation onComplete={() => setShowBoot(false)} />}
       <header className="header">
         <div className="header-wrapper">
           <div className="header-content">

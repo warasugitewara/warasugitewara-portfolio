@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { I18n, Profile } from '../types';
+import { getDataUrl } from '../utils/path';
 
 interface ContactProps {
   i18n: I18n | null;
@@ -11,7 +12,8 @@ export const Contact = ({ i18n }: ContactProps) => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const response = await fetch('/data/profile.json');
+        const response = await fetch(getDataUrl('profile.json'));
+        if (!response.ok) throw new Error(`Failed to load profile: ${response.status}`);
         const data = await response.json();
         setProfile(data);
       } catch (error) {

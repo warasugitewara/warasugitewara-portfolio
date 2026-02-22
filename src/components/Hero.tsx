@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Profile } from '../types';
 import type { I18n } from '../types';
+import { getDataUrl } from '../utils/path';
 
 interface HeroProps {
   i18n: I18n | null;
@@ -13,7 +14,8 @@ export const Hero = ({ i18n }: HeroProps) => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const response = await fetch('/data/profile.json');
+        const response = await fetch(getDataUrl('profile.json'));
+        if (!response.ok) throw new Error(`Failed to load profile: ${response.status}`);
         const data = await response.json();
         setProfile(data);
         setAvatar(data.avatar);

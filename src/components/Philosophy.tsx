@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { I18n } from '../types';
+import { getDataUrl } from '../utils/path';
 
 interface Principle {
   title: string;
@@ -16,7 +17,8 @@ export const Philosophy = ({ i18n }: PhilosophyProps) => {
   useEffect(() => {
     const loadPhilosophy = async () => {
       try {
-        const response = await fetch('/data/philosophy.json');
+        const response = await fetch(getDataUrl('philosophy.json'));
+        if (!response.ok) throw new Error(`Failed to load philosophy: ${response.status}`);
         const data = await response.json();
         setPrinciples(data.philosophy.principles);
       } catch (error) {

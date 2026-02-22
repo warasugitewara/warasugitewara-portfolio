@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { I18n, Skill } from '../types';
+import { getDataUrl } from '../utils/path';
 
 interface SkillsProps {
   i18n: I18n | null;
@@ -11,7 +12,8 @@ export const Skills = ({ i18n }: SkillsProps) => {
   useEffect(() => {
     const loadSkills = async () => {
       try {
-        const response = await fetch('/data/skills.json');
+        const response = await fetch(getDataUrl('skills.json'));
+        if (!response.ok) throw new Error(`Failed to load skills: ${response.status}`);
         const data = await response.json();
         setSkills(data.skills);
       } catch (error) {

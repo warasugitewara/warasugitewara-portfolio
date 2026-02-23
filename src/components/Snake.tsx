@@ -29,8 +29,8 @@ export const Snake = ({ i18n }: SnakeProps) => {
     const checkSnake = async () => {
       try {
         const url = isDark
-          ? 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg'
-          : 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg';
+          ? '/github-contribution-grid-snake-dark.svg'
+          : '/github-contribution-grid-snake.svg';
         
         const response = await fetch(url);
         setHasSnake(response.ok);
@@ -46,8 +46,8 @@ export const Snake = ({ i18n }: SnakeProps) => {
 
   if (!i18n) return null;
 
-  const snakeDarkUrl = 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg';
-  const snakeLightUrl = 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg';
+  const snakeDarkUrl = '/github-contribution-grid-snake-dark.svg';
+  const snakeLightUrl = '/github-contribution-grid-snake.svg';
 
   return (
     <section className="section snake">

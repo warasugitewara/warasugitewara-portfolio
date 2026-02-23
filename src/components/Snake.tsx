@@ -9,17 +9,19 @@ export const Snake = ({ i18n }: SnakeProps) => {
   const [hasSnake, setHasSnake] = useState(false);
 
   useEffect(() => {
-    // Check if snake SVG exists (by trying to fetch it)
+    // Check if snake SVG exists (try both light and dark versions)
     const checkSnake = async () => {
       try {
-        const theme = document.documentElement.getAttribute('data-theme');
-        const isDark = theme !== 'light';
-        const url = isDark
-          ? '/github-contribution-grid-snake-dark.svg'
-          : '/github-contribution-grid-snake.svg';
+        // Check if either SVG exists
+        const darkUrl = '/github-contribution-grid-snake-dark.svg';
+        const lightUrl = '/github-contribution-grid-snake.svg';
         
-        const response = await fetch(url);
-        setHasSnake(response.ok);
+        const [darkRes, lightRes] = await Promise.all([
+          fetch(darkUrl),
+          fetch(lightUrl),
+        ]);
+        
+        setHasSnake(darkRes.ok || lightRes.ok);
       } catch {
         setHasSnake(false);
       }
@@ -27,7 +29,7 @@ export const Snake = ({ i18n }: SnakeProps) => {
 
     checkSnake();
 
-    // Listen for theme changes
+    // Listen for theme changes to re-check
     const observer = new MutationObserver(() => {
       checkSnake();
     });

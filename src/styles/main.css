@@ -1,11 +1,22 @@
-:root {
+:root,
+[data-theme="dark"] {
   --color-bg: #0a0e27;
   --color-surface: #16213e;
-  --color-neon-green: #00ff88;
-  --color-neon-cyan: #00ffff;
-  --color-text: #e0e0e0;
-  --color-text-secondary: #a0a0a0;
-  --color-accent: #ff0055;
+  --color-neon-green: #10b981;
+  --color-neon-cyan: #06b6d4;
+  --color-text: #e5e7eb;
+  --color-text-secondary: #9ca3af;
+  --color-accent: #f87171;
+}
+
+[data-theme="light"] {
+  --color-bg: #f9fafb;
+  --color-surface: #f3f4f6;
+  --color-neon-green: #059669;
+  --color-neon-cyan: #0891b2;
+  --color-text: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-accent: #dc2626;
 }
 
 * {
@@ -100,17 +111,19 @@ a:hover {
   display: flex;
   gap: 0.5rem;
   margin-left: auto;
+  align-items: center;
 }
 
 .lang-btn {
   background: transparent;
-  border: 1px solid rgba(0, 255, 136, 0.3);
+  border: 1px solid var(--color-neon-green);
   color: var(--color-text-secondary);
   padding: 0.4rem 0.8rem;
   font-family: inherit;
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
+  border-opacity: 0.3;
 }
 
 .lang-btn:hover {
@@ -121,7 +134,20 @@ a:hover {
 .lang-btn.active {
   border-color: var(--color-neon-green);
   color: var(--color-neon-green);
-  background: rgba(0, 255, 136, 0.05);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.theme-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  padding: 0.4rem 0.8rem;
+}
+
+.theme-btn:hover {
+  transform: rotate(20deg) scale(1.2);
 }
 
 /* Main */
@@ -153,6 +179,18 @@ a:hover {
   margin-bottom: 1.5rem;
   border-left: 3px solid var(--color-neon-green);
   padding-left: 0.8rem;
+  animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Hero */
@@ -168,18 +206,22 @@ a:hover {
 
 .hero-avatar {
   flex-shrink: 0;
+  animation: fadeInScale 0.6s ease-out;
 }
 
 .hero-avatar img {
   width: 100px;
   height: 100px;
   border-radius: 4px;
-  border: 2px solid rgba(0, 255, 136, 0.2);
-  transition: border-color 0.3s;
+  border: 2px solid var(--color-neon-green);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
 }
 
 .hero-avatar:hover img {
-  border-color: var(--color-neon-green);
+  border-color: var(--color-neon-cyan);
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
 }
 
 .hero-content h1 {
@@ -242,6 +284,16 @@ a:hover {
   font-size: 0.85rem;
   border-radius: 2px;
   color: var(--color-text-secondary);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.skill-item:hover {
+  background: var(--color-neon-green);
+  border-color: var(--color-neon-green);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 /* Projects */
@@ -258,14 +310,16 @@ a:hover {
   gap: 1rem;
   padding: 1rem;
   background: rgba(22, 33, 62, 0.2);
-  border: 1px solid rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.1);
   border-radius: 2px;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
 .project-item:hover {
   background: rgba(22, 33, 62, 0.4);
-  border-color: rgba(0, 255, 136, 0.3);
+  border-color: var(--color-neon-green);
+  transform: translateX(8px);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
 .project-info {

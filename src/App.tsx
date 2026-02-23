@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useI18n } from './hooks/useI18n';
+import { useTheme } from './hooks/useTheme';
 import { BootAnimation } from './components/BootAnimation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -9,10 +10,10 @@ import { Contact } from './components/Contact';
 
 function App() {
   const { lang, i18n, switchLanguage } = useI18n('ja');
+  const { theme, toggleTheme } = useTheme('dark');
   const [showBoot, setShowBoot] = useState(true);
 
   useEffect(() => {
-    // Set document language
     document.documentElement.lang = lang;
   }, [lang]);
 
@@ -51,6 +52,13 @@ function App() {
                 onClick={() => switchLanguage('en')}
               >
                 English
+              </button>
+              <button
+                className="theme-btn"
+                onClick={toggleTheme}
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
               </button>
             </div>
           </nav>

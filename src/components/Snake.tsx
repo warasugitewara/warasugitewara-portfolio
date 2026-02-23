@@ -7,6 +7,7 @@ interface SnakeProps {
 
 export const Snake = ({ i18n }: SnakeProps) => {
   const [isDark, setIsDark] = useState(true);
+  const [hasSnake, setHasSnake] = useState(false);
 
   useEffect(() => {
     // Check if dark mode is active
@@ -24,35 +25,59 @@ export const Snake = ({ i18n }: SnakeProps) => {
       attributeFilter: ['data-theme'],
     });
 
+    // Check if snake SVG exists (by trying to fetch it)
+    const checkSnake = async () => {
+      try {
+        const url = isDark
+          ? 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg'
+          : 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg';
+        
+        const response = await fetch(url);
+        setHasSnake(response.ok);
+      } catch (e) {
+        setHasSnake(false);
+      }
+    };
+
+    checkSnake();
+
     return () => observer.disconnect();
-  }, []);
+  }, [isDark]);
 
   if (!i18n) return null;
 
-  const snakeUrl = isDark
-    ? 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg'
-    : 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg';
+  const snakeDarkUrl = 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg';
+  const snakeLightUrl = 'https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg';
 
   return (
     <section className="section snake">
       <div className="section-container">
         <h2 className="section-title">Contributions</h2>
         <div className="snake-container">
-          <picture>
-            <source
-              media="(prefers-color-scheme: dark)"
-              srcSet="https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake-dark.svg"
-            />
-            <source
-              media="(prefers-color-scheme: light)"
-              srcSet="https://raw.githubusercontent.com/warasugitewara/.Warasugi-portfolio/output/github-contribution-grid-snake.svg"
-            />
-            <img
-              alt="github contribution grid snake animation"
-              src={snakeUrl}
-              loading="lazy"
-            />
-          </picture>
+          {hasSnake ? (
+            <picture>
+              <source
+                media="(prefers-color-scheme: dark)"
+                srcSet={snakeDarkUrl}
+              />
+              <source
+                media="(prefers-color-scheme: light)"
+                srcSet={snakeLightUrl}
+              />
+              <img
+                alt="github contribution grid snake animation"
+                src={snakeDarkUrl}
+                loading="lazy"
+              />
+            </picture>
+          ) : (
+            <div className="snake-placeholder">
+              <p>🐍 GitHub contribution animation generating...</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>
+                Trigger the workflow on GitHub Actions to generate the snake animation
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>

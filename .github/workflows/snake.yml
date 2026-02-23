@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
@@ -25,10 +28,9 @@ jobs:
 
       - name: Commit and push
         run: |
-          cd dist
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
+          git add dist/github-contribution-grid-snake*.svg
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update snake animation" && git push)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

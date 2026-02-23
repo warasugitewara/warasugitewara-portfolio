@@ -2,33 +2,25 @@ import { useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
 
-export const useTheme = (defaultTheme: Theme = 'dark') => {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+export const useTheme = (): { theme: Theme; switchTheme: (newTheme: Theme) => void; toggleTheme: () => void } => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('theme') as Theme | null;
+    if (saved) return saved;
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+  });
 
   useEffect(() => {
-    // Get saved theme from localStorage or detect system preference
-    const saved = localStorage.getItem('theme') as Theme | null;
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute('data-theme', saved);
-    } else {
-      // Detect system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const detectedTheme: Theme = prefersDark ? 'dark' : 'light';
-      setTheme(detectedTheme);
-      document.documentElement.setAttribute('data-theme', detectedTheme);
-    }
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const switchTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    switchTheme(newTheme);
+    switchTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   return { theme, switchTheme, toggleTheme };

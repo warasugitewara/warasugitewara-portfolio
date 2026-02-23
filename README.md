@@ -10,13 +10,14 @@ CLI-focused engineer. Lightweight systems, infrastructure design, and custom too
 ## ✨ Features
 
 - **CLI-Oriented Design** - Terminal-inspired UI with boot animation
-- **Lightweight & Fast** - ~600KB JS (gzip: 96KB), optimized for performance
-- **Bilingual Support** - Japanese (日本語) / English with URL persistence
-- **Dark Theme** - Neon accents (#00ff88, #00ffff) with glitch effects
+- **Lightweight & Fast** - ~192KB JS (gzip: 60KB), optimized for performance
+- **Bilingual Support** - Japanese (日本語) / English with localStorage persistence
+- **Dark/Light Theme** - Smooth theme toggle with system preference detection
+- **GitHub Contributions** - Snake animation showing activity history
 - **GitHub API Integration** - Real-time project showcase from GitHub
 - **Responsive Design** - Mobile-first approach, works on all devices
 - **Minimal Dependencies** - React + TypeScript only, no heavy frameworks
-- **Accessible** - Proper semantic HTML, respects prefers-reduced-motion
+- **Accessible** - Proper semantic HTML, keyboard navigation, ARIA labels
 
 ## 🛠️ Tech Stack
 
@@ -34,13 +35,14 @@ src/
 ├── components/
 │   ├── Hero.tsx              # Welcome section with avatar
 │   ├── About.tsx             # Profile information
+│   ├── Snake.tsx             # GitHub contributions animation
 │   ├── Skills.tsx            # Technical skills grid
 │   ├── Projects.tsx          # GitHub projects (API-driven)
-│   ├── Philosophy.tsx        # Development principles
-│   ├── Contact.tsx           # Social links
+│   ├── Contact.tsx           # Social links & contact info
 │   └── BootAnimation.tsx     # Startup sequence
 ├── hooks/
-│   └── useI18n.ts            # Multi-language hook
+│   ├── useI18n.ts            # Multi-language hook
+│   └── useTheme.ts           # Dark/light theme hook
 ├── types/
 │   └── index.ts              # TypeScript type definitions
 ├── styles/
@@ -49,9 +51,8 @@ src/
 └── main.tsx                  # Entry point
 
 public/data/
-├── profile.json              # User profile
+├── profile.json              # User profile & social links
 ├── skills.json               # Skills data
-├── philosophy.json           # Development philosophy
 ├── i18n-ja.json              # Japanese translations
 └── i18n-en.json              # English translations
 ```
@@ -118,10 +119,8 @@ This project uses GitHub Actions for automatic deployment:
 
 1. Push to `main` branch
 2. GitHub Actions builds the project (`npm run build`)
-3. Output deployed to GitHub Pages
-4. Live at: https://warasugitewara.github.io/warasugi-portfolio/
-
-See `.github/workflows/deploy.yml` for details.
+3. SVG files for contribution snake are auto-generated every 24 hours
+4. Output deployed to GitHub Pages (custom domain: https://wc.f5.si)
 
 ## 📝 License
 

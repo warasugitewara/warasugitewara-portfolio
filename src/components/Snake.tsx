@@ -6,18 +6,30 @@ interface SnakeProps {
 }
 
 export const Snake = ({ i18n }: SnakeProps) => {
-  const [isDark, setIsDark] = useState(true);
   const [hasSnake, setHasSnake] = useState(false);
 
   useEffect(() => {
-    // Check if dark mode is active
-    const theme = document.documentElement.getAttribute('data-theme');
-    setIsDark(theme !== 'light');
+    // Check if snake SVG exists (by trying to fetch it)
+    const checkSnake = async () => {
+      try {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const isDark = theme !== 'light';
+        const url = isDark
+          ? '/github-contribution-grid-snake-dark.svg'
+          : '/github-contribution-grid-snake.svg';
+        
+        const response = await fetch(url);
+        setHasSnake(response.ok);
+      } catch {
+        setHasSnake(false);
+      }
+    };
+
+    checkSnake();
 
     // Listen for theme changes
     const observer = new MutationObserver(() => {
-      const newTheme = document.documentElement.getAttribute('data-theme');
-      setIsDark(newTheme !== 'light');
+      checkSnake();
     });
 
     observer.observe(document.documentElement, {
@@ -25,24 +37,8 @@ export const Snake = ({ i18n }: SnakeProps) => {
       attributeFilter: ['data-theme'],
     });
 
-    // Check if snake SVG exists (by trying to fetch it)
-    const checkSnake = async () => {
-      try {
-        const url = isDark
-          ? '/github-contribution-grid-snake-dark.svg'
-          : '/github-contribution-grid-snake.svg';
-        
-        const response = await fetch(url);
-        setHasSnake(response.ok);
-      } catch (e) {
-        setHasSnake(false);
-      }
-    };
-
-    checkSnake();
-
     return () => observer.disconnect();
-  }, [isDark]);
+  }, []);
 
   if (!i18n) return null;
 

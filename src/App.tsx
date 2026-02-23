@@ -12,11 +12,23 @@ import { Contact } from './components/Contact';
 function App() {
   const { lang, i18n, switchLanguage } = useI18n('ja');
   const { theme, toggleTheme } = useTheme('dark');
-  const [showBoot, setShowBoot] = useState(true);
+  const [showBoot, setShowBoot] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const shown = localStorage.getItem('bootAnimationShown');
+      return !shown;
+    }
+    return true;
+  });
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  useEffect(() => {
+    if (showBoot === false) {
+      localStorage.setItem('bootAnimationShown', 'true');
+    }
+  }, [showBoot]);
 
   if (!i18n) {
     return <div className="loading">Loading...</div>;
@@ -58,6 +70,7 @@ function App() {
                 className="theme-btn"
                 onClick={toggleTheme}
                 title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
               >
                 {theme === 'dark' ? '☀️' : '🌙'}
               </button>

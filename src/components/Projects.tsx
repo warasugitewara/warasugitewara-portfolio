@@ -5,6 +5,16 @@ interface ProjectsProps {
   i18n: I18n | null;
 }
 
+interface GitHubRepoRaw {
+  fork: boolean;
+  description: string | null;
+  name: string;
+  html_url: string;
+  language: string | null;
+  stargazers_count: number;
+  updated_at: string;
+}
+
 export const Projects = ({ i18n }: ProjectsProps) => {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,12 +26,12 @@ export const Projects = ({ i18n }: ProjectsProps) => {
         const response = await fetch(
           'https://api.github.com/users/warasugitewara/repos?sort=updated&per_page=12&type=owner'
         );
-        const data = await response.json();
+        const data: GitHubRepoRaw[] = await response.json();
 
         const repos: GitHubRepo[] = data
-          .filter((repo: any) => !repo.fork && repo.description)
+          .filter((repo) => !repo.fork && repo.description)
           .slice(0, 10)
-          .map((repo: any) => ({
+          .map((repo) => ({
             name: repo.name,
             description: repo.description || '',
             url: repo.html_url,
@@ -51,6 +61,15 @@ export const Projects = ({ i18n }: ProjectsProps) => {
         <h2 className="section-title">{i18n.projects.title}</h2>
         {loading ? (
           <div className="projects-loading">Loading repositories...</div>
+        ) : repos.length === 0 ? (
+          <div className="projects-empty">
+            <p>Unable to load repositories from GitHub</p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>
+              <a href="https://github.com/warasugitewara" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-accent)' }}>
+                View on GitHub →
+              </a>
+            </p>
+          </div>
         ) : (
           <div className="projects-list">
             {repos.map((project) => (

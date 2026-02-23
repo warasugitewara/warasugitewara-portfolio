@@ -24,7 +24,12 @@ export const Contact = ({ i18n }: ContactProps) => {
     loadProfile();
   }, []);
 
-  if (!i18n || !profile) return null;
+  if (!i18n) return null;
+
+  // Use fallback GitHub link if profile fails to load
+  const githubLink = profile?.socials.github ?? 'https://github.com/warasugitewara';
+  const twitterLink = profile?.socials.twitter;
+  const discordLink = profile?.socials.discord;
 
   return (
     <section id="contact" className="section contact">
@@ -32,32 +37,39 @@ export const Contact = ({ i18n }: ContactProps) => {
         <h2 className="section-title">{i18n.contact.title}</h2>
         <div className="contact-links">
           <a
-            href={profile.socials.github}
+            href={githubLink}
             target="_blank"
             rel="noopener noreferrer"
             className="contact-link"
+            aria-label="GitHub profile"
           >
             <span className="icon">→</span>
             <span className="label">{i18n.contact.github}</span>
           </a>
-          <a
-            href={profile.socials.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contact-link"
-          >
-            <span className="icon">→</span>
-            <span className="label">{i18n.contact.twitter}</span>
-          </a>
-          <a
-            href={profile.socials.discord}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contact-link"
-          >
-            <span className="icon">→</span>
-            <span className="label">{i18n.contact.discord}</span>
-          </a>
+          {twitterLink && (
+            <a
+              href={twitterLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-link"
+              aria-label="Twitter profile"
+            >
+              <span className="icon">→</span>
+              <span className="label">{i18n.contact.twitter}</span>
+            </a>
+          )}
+          {discordLink && (
+            <a
+              href={discordLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-link"
+              aria-label="Discord profile"
+            >
+              <span className="icon">→</span>
+              <span className="label">{i18n.contact.discord}</span>
+            </a>
+          )}
         </div>
       </div>
     </section>

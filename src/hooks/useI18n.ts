@@ -43,7 +43,7 @@ export const useI18n = (defaultLang: Language = 'ja') => {
     };
 
     loadI18n();
-  }, [basePath]);
+  }, [basePath, defaultLang]);
 
   const switchLanguage = (newLang: Language) => {
     setLang(newLang);

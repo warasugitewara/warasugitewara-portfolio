@@ -5,9 +5,7 @@ import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
-import { Philosophy } from './components/Philosophy';
 import { Contact } from './components/Contact';
-import type { Language } from './types';
 
 function App() {
   const { lang, i18n, switchLanguage } = useI18n('ja');
@@ -27,13 +25,7 @@ function App() {
       {showBoot && <BootAnimation onComplete={() => setShowBoot(false)} />}
       <header className="header">
         <div className="header-wrapper">
-          <div className="header-content">
-            <h1 className="header-title">
-              <a href="#" className="header-link">
-                warasugi
-              </a>
-            </h1>
-          </div>
+          <h1 className="header-title">warasugi</h1>
           <nav className="header-nav">
             <a href="#about" className="nav-link">
               {i18n.nav.about}
@@ -43,9 +35,6 @@ function App() {
             </a>
             <a href="#projects" className="nav-link">
               {i18n.nav.projects}
-            </a>
-            <a href="#philosophy" className="nav-link">
-              {i18n.nav.philosophy}
             </a>
             <a href="#contact" className="nav-link">
               {i18n.nav.contact}
@@ -73,7 +62,6 @@ function App() {
         <About i18n={i18n} />
         <Skills i18n={i18n} />
         <Projects i18n={i18n} />
-        <Philosophy i18n={i18n} />
         <Contact i18n={i18n} />
       </main>
 

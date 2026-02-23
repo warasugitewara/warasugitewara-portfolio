@@ -32,11 +32,11 @@ export const Skills = ({ i18n }: SkillsProps) => {
         <h2 className="section-title">{i18n.skills.title}</h2>
         <div className="skills-grid">
           {skills.map((skill) => (
-            <div key={skill.category} className="skill-group">
-              <h3 className="skill-category">{skill.category}</h3>
+            <div key={skill.category} className="skill-category">
+              <h3 className="skill-category-title">{skill.category}</h3>
               <div className="skill-items">
                 {skill.items.map((item) => (
-                  <span key={item} className="skill-tag">
+                  <span key={item} className="skill-item">
                     {item}
                   </span>
                 ))}

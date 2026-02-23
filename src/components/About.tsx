@@ -31,28 +31,13 @@ export const About = ({ i18n }: AboutProps) => {
       <div className="section-container">
         <h2 className="section-title">{i18n.about.title}</h2>
         <div className="about-content">
-          <div className="about-text">
-            <p>{i18n.about.description}</p>
-            <p className="about-school">
-              <strong>学歴:</strong> {profile.school}
-            </p>
-          </div>
-          <div className="about-details">
-            <div className="detail-item">
-              <span className="label">Name</span>
-              <span className="value">{profile.name}</span>
-            </div>
-            <div className="detail-item">
-              <span className="label">Location</span>
-              <span className="value">{profile.location}</span>
-            </div>
-            <div className="detail-item">
-              <span className="label">GitHub</span>
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="value link">
-                @warasugitewara
-              </a>
-            </div>
-          </div>
+          <p>{i18n.about.description}</p>
+          <p style={{ marginTop: '1rem' }}>
+            <strong>学歴:</strong> {profile.school}
+          </p>
+          <p style={{ marginTop: '1rem' }}>
+            <strong>GitHub:</strong> <a href={profile.github} target="_blank" rel="noopener noreferrer">@warasugitewara</a>
+          </p>
         </div>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { useTheme } from './hooks/useTheme';
 import { BootAnimation } from './components/BootAnimation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
+import { Snake } from './components/Snake';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
@@ -68,6 +69,7 @@ function App() {
       <main className="main">
         <Hero i18n={i18n} />
         <About i18n={i18n} />
+        <Snake i18n={i18n} />
         <Skills i18n={i18n} />
         <Projects i18n={i18n} />
         <Contact i18n={i18n} />

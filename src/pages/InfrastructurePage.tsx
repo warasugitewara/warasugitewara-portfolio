@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getDataUrl } from '../utils/path';
+import { MermaidDiagram } from '../components/MermaidDiagram';
 
 interface InfrastructurePageProps {
   i18n: any;
+  lang: string;
 }
 
 interface InfrastructureData {
@@ -52,6 +54,10 @@ interface InfrastructureData {
         linux_vms: string;
       };
     };
+    future_roadmap: Record<string, {
+      status: string;
+      components: string[];
+    }>;
     technology_stack: {
       virtualization: string[];
       networking: string[];
@@ -60,18 +66,75 @@ interface InfrastructureData {
       planned_apps: string[];
     };
     learning_outcomes: string[];
+    operational_practices: {
+      monitoring: string;
+      backups: string;
+      updates: string;
+      documentation: string;
+    };
+    why_proxmox: string[];
   };
 }
 
-export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
+const techStackLabels: Record<string, Record<string, string>> = {
+  ja: {
+    virtualization: '仮想化',
+    networking: 'ネットワーク',
+    storage: 'ストレージ',
+    security: 'セキュリティ',
+    planned_apps: '計画中アプリ',
+  },
+  en: {
+    virtualization: 'Virtualization',
+    networking: 'Networking',
+    storage: 'Storage',
+    security: 'Security',
+    planned_apps: 'Planned Apps',
+  },
+};
+
+const roadmapLabels: Record<string, Record<string, string>> = {
+  ja: {
+    phase_1_current: 'Phase 1',
+    phase_2_planned: 'Phase 2',
+    phase_3_future: 'Phase 3',
+  },
+  en: {
+    phase_1_current: 'Phase 1',
+    phase_2_planned: 'Phase 2',
+    phase_3_future: 'Phase 3',
+  },
+};
+
+const opsLabels: Record<string, Record<string, string>> = {
+  ja: {
+    monitoring: '監視',
+    backups: 'バックアップ',
+    updates: 'アップデート',
+    documentation: 'ドキュメント',
+  },
+  en: {
+    monitoring: 'Monitoring',
+    backups: 'Backups',
+    updates: 'Updates',
+    documentation: 'Documentation',
+  },
+};
+
+export const InfrastructurePage = ({ i18n, lang }: InfrastructurePageProps) => {
   const [infra, setInfra] = useState<InfrastructureData | null>(null);
+  const [mermaidChart, setMermaidChart] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    architecture: true,
     philosophy: true,
-    hypervisor: true,
+    hypervisor: false,
     nodes: true,
     network: false,
     security: false,
+    roadmap: true,
     techStack: false,
+    operations: false,
+    whyProxmox: false,
     learning: false,
   });
   const [expandedNode, setExpandedNode] = useState<string | null>(null);
@@ -88,7 +151,20 @@ export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
       }
     };
 
+    const loadMermaidChart = async () => {
+      try {
+        const basePath = import.meta.env.BASE_URL || '/';
+        const response = await fetch(`${basePath}diagrams/infra-architecture.mmd`);
+        if (!response.ok) throw new Error(`Failed to load diagram: ${response.status}`);
+        const text = await response.text();
+        setMermaidChart(text);
+      } catch (error) {
+        console.error('Failed to load mermaid chart:', error);
+      }
+    };
+
     loadInfrastructure();
+    loadMermaidChart();
   }, []);
 
   const toggleSection = (section: string) => {
@@ -101,50 +177,58 @@ export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
   if (!i18n || !infra) return null;
 
   return (
-    <div style={{ padding: '2rem 0' }}>
+    <div className="infra-page">
       <div className="section-container">
-        {/* Title */}
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: '#00ff88' }}>
-          🖧 {infra.infrastructure.title}
-        </h1>
-        <p style={{ fontSize: '1.2rem', color: '#999', marginBottom: '2rem' }}>
-          {infra.infrastructure.subtitle}
-        </p>
-
-        {/* Overview */}
-        <div style={{ marginBottom: '3rem', padding: '1.5rem', backgroundColor: 'rgba(0,255,136,0.05)', borderLeft: '4px solid #00ff88', borderRadius: '4px' }}>
-          <p style={{ lineHeight: '1.8', margin: '0' }}>{infra.infrastructure.overview}</p>
+        {/* Hero Header */}
+        <div className="infra-hero">
+          <h1 className="infra-title">
+            <span className="infra-title-icon">🖧</span> {infra.infrastructure.title}
+          </h1>
+          <p className="infra-subtitle">{infra.infrastructure.subtitle}</p>
         </div>
 
-        {/* Design Philosophy - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
+        {/* Overview Banner */}
+        <div className="infra-overview">
+          <p>{infra.infrastructure.overview}</p>
+        </div>
+
+        {/* Architecture Diagram - Prominently at Top */}
+        <div className="infra-section">
           <button
-            onClick={() => toggleSection('philosophy')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
+            className={`infra-section-toggle ${expandedSections.architecture ? 'expanded' : ''}`}
+            onClick={() => toggleSection('architecture')}
           >
-            {i18n.infrastructure.designPhilosophy}
-            <span>{expandedSections.philosophy ? '▼' : '▶'}</span>
+            <span>🗺️ {i18n.infrastructure.architectureDiagram}</span>
+            <span className="infra-toggle-icon">{expandedSections.architecture ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.architecture && (
+            <div className="infra-section-content">
+              <div className="infra-diagram">
+                {mermaidChart ? (
+                  <MermaidDiagram chart={mermaidChart} />
+                ) : (
+                  <div className="infra-diagram-loading">Loading diagram...</div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Design Philosophy */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.philosophy ? 'expanded' : ''}`}
+            onClick={() => toggleSection('philosophy')}
+          >
+            <span>💡 {i18n.infrastructure.designPhilosophy}</span>
+            <span className="infra-toggle-icon">{expandedSections.philosophy ? '▼' : '▶'}</span>
           </button>
           {expandedSections.philosophy && (
-            <div style={{ padding: '1rem', marginTop: '1rem' }}>
-              <ul style={{ listStyle: 'none', padding: '0' }}>
+            <div className="infra-section-content">
+              <ul className="infra-checklist">
                 {infra.infrastructure.design_philosophy.map((item, idx) => (
-                  <li key={idx} style={{ marginBottom: '0.8rem', paddingLeft: '1.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '0', color: '#00ff88' }}>✓</span>
+                  <li key={idx} className="infra-checklist-item">
+                    <span className="infra-check-icon">✓</span>
                     {item}
                   </li>
                 ))}
@@ -153,224 +237,23 @@ export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
           )}
         </div>
 
-        {/* Hypervisor - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
+        {/* Hypervisor */}
+        <div className="infra-section">
           <button
+            className={`infra-section-toggle ${expandedSections.hypervisor ? 'expanded' : ''}`}
             onClick={() => toggleSection('hypervisor')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
           >
-            🖥️ {i18n.infrastructure.hypervisor}
-            <span>{expandedSections.hypervisor ? '▼' : '▶'}</span>
+            <span>🖥️ {i18n.infrastructure.hypervisor}</span>
+            <span className="infra-toggle-icon">{expandedSections.hypervisor ? '▼' : '▶'}</span>
           </button>
           {expandedSections.hypervisor && (
-            <div style={{ padding: '1rem', marginTop: '1rem', backgroundColor: 'rgba(0,255,136,0.03)', borderRadius: '4px' }}>
-              <h3 style={{ marginBottom: '0.5rem', color: '#00ff88', fontSize: '1.1rem' }}>
-                {infra.infrastructure.hypervisor.platform}
-              </h3>
-              <p style={{ marginBottom: '1rem' }}>{infra.infrastructure.hypervisor.purpose}</p>
-              <h4 style={{ marginBottom: '0.5rem', color: '#ccc' }}>主な機能:</h4>
-              <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-                {infra.infrastructure.hypervisor.key_features.map((feature, idx) => (
-                  <li key={idx} style={{ fontSize: '0.95rem', marginBottom: '0.3rem', paddingLeft: '1.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '0', color: '#00ff88' }}>•</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Nodes - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
-          <button
-            onClick={() => toggleSection('nodes')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
-          >
-            {i18n.infrastructure.nodes}
-            <span>{expandedSections.nodes ? '▼' : '▶'}</span>
-          </button>
-          {expandedSections.nodes && (
-            <div style={{ marginTop: '1rem' }}>
-              {infra.infrastructure.nodes.map(node => (
-                <div
-                  key={node.id}
-                  style={{
-                    border: '1px solid #00ff88',
-                    borderRadius: '4px',
-                    padding: '1rem',
-                    marginBottom: '1rem',
-                    backgroundColor: 'rgba(0,255,136,0.03)',
-                  }}
-                >
-                  <div
-                    onClick={() => setExpandedNode(expandedNode === node.id ? null : node.id)}
-                    style={{
-                      cursor: 'pointer',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <div>
-                      <h4 style={{ marginBottom: '0.3rem', color: '#00ff88', fontSize: '1.05rem' }}>
-                        {node.name} - {node.role}
-                      </h4>
-                      <p style={{ fontSize: '0.9rem', margin: '0', color: '#ccc' }}>
-                        <strong>ハードウェア:</strong> {node.hardware}
-                      </p>
-                    </div>
-                    <span style={{ fontSize: '1.3rem', color: '#00ff88' }}>
-                      {expandedNode === node.id ? '▼' : '▶'}
-                    </span>
-                  </div>
-
-                  {expandedNode === node.id && (
-                    <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(0,255,136,0.2)' }}>
-                      <p style={{ marginBottom: '0.5rem' }}><strong>目的:</strong></p>
-                      <p style={{ margin: '0 0 0.8rem 0', color: '#ccc' }}>{node.purpose}</p>
-
-                      {node.rationale && (
-                        <>
-                          <p style={{ marginBottom: '0.5rem' }}><strong>設計理由:</strong></p>
-                          <p style={{ margin: '0 0 0.8rem 0', color: '#ccc' }}>{node.rationale}</p>
-                        </>
-                      )}
-
-                      <p style={{ marginBottom: '0.5rem' }}><strong>ワークロード:</strong></p>
-                      <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-                        {node.workloads.map((wl, idx) => (
-                          <li key={idx} style={{ marginBottom: '0.5rem', paddingLeft: '1rem', position: 'relative', color: '#ccc' }}>
-                            <span style={{ position: 'absolute', left: '0', color: '#00ff88' }}>→</span>
-                            <strong>{wl.name}</strong> ({wl.type})
-                            {wl.os && ` - ${wl.os}`}
-                            {wl.purpose && <span style={{ display: 'block', fontSize: '0.85rem', marginTop: '0.2rem' }}>{wl.purpose}</span>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Network Design - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
-          <button
-            onClick={() => toggleSection('network')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
-          >
-            {i18n.infrastructure.networkDesign}
-            <span>{expandedSections.network ? '▼' : '▶'}</span>
-          </button>
-          {expandedSections.network && (
-            <div style={{ padding: '1rem', marginTop: '1rem', backgroundColor: 'rgba(0,255,136,0.03)', borderRadius: '4px' }}>
-              <p style={{ marginBottom: '0.5rem' }}><strong>トポロジー:</strong> {infra.infrastructure.network_design.topology}</p>
-              <p style={{ marginBottom: '0.5rem' }}><strong>ゲートウェイ:</strong> {infra.infrastructure.network_design.gateway}</p>
-              <p style={{ marginBottom: '0.5rem' }}><strong>DNS:</strong> {infra.infrastructure.network_design.dns}</p>
-              <p style={{ marginBottom: '0.5rem' }}><strong>セキュリティ対策:</strong></p>
-              <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-                {infra.infrastructure.network_design.security.map((sec, idx) => (
-                  <li key={idx} style={{ fontSize: '0.9rem', marginBottom: '0.3rem', paddingLeft: '1.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '0', color: '#00ff88' }}>•</span>
-                    {sec}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Security Model - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
-          <button
-            onClick={() => toggleSection('security')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
-          >
-            🔐 {i18n.infrastructure.securityModel}
-            <span>{expandedSections.security ? '▼' : '▶'}</span>
-          </button>
-          {expandedSections.security && (
-            <div style={{ marginTop: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-              <div style={{ padding: '1rem', backgroundColor: 'rgba(0,255,136,0.05)', borderRadius: '4px', border: '1px solid rgba(0,255,136,0.2)' }}>
-                <h4 style={{ marginBottom: '0.5rem', color: '#00ff88' }}>SSH設定</h4>
-                <ul style={{ listStyle: 'none', padding: '0', margin: '0', fontSize: '0.9rem' }}>
-                  <li style={{ marginBottom: '0.3rem' }}>Root ログイン: <strong>{infra.infrastructure.security_model.ssh.root_login}</strong></li>
-                  <li style={{ marginBottom: '0.3rem' }}>パスワード認証: <strong>{infra.infrastructure.security_model.ssh.password_auth}</strong></li>
-                  <li style={{ marginBottom: '0.3rem' }}>鍵タイプ: <strong>{infra.infrastructure.security_model.ssh.key_type}</strong></li>
-                  <li>アクセス方法: <strong>{infra.infrastructure.security_model.ssh.access_method}</strong></li>
-                </ul>
-              </div>
-              <div style={{ padding: '1rem', backgroundColor: 'rgba(0,255,136,0.05)', borderRadius: '4px', border: '1px solid rgba(0,255,136,0.2)' }}>
-                <h4 style={{ marginBottom: '0.5rem', color: '#00ff88' }}>認証</h4>
-                <ul style={{ listStyle: 'none', padding: '0', margin: '0', fontSize: '0.9rem' }}>
-                  <li style={{ marginBottom: '0.3rem' }}>Proxmox: <strong>{infra.infrastructure.security_model.authentication.proxmox}</strong></li>
-                  <li>Linux VM: <strong>{infra.infrastructure.security_model.authentication.linux_vms}</strong></li>
-                </ul>
-              </div>
-              <div style={{ padding: '1rem', backgroundColor: 'rgba(0,255,136,0.05)', borderRadius: '4px', border: '1px solid rgba(0,255,136,0.2)' }}>
-                <h4 style={{ marginBottom: '0.5rem', color: '#00ff88' }}>バックアップ戦略</h4>
-                <ul style={{ listStyle: 'none', padding: '0', margin: '0', fontSize: '0.9rem' }}>
-                  {infra.infrastructure.security_model.backup_strategy.map((strategy, idx) => (
-                    <li key={idx} style={{ marginBottom: '0.3rem' }}>• {strategy}</li>
+            <div className="infra-section-content">
+              <div className="infra-card">
+                <h3 className="infra-card-title">{infra.infrastructure.hypervisor.platform}</h3>
+                <p className="infra-card-desc">{infra.infrastructure.hypervisor.purpose}</p>
+                <ul className="infra-bullet-list">
+                  {infra.infrastructure.hypervisor.key_features.map((feature, idx) => (
+                    <li key={idx}><span className="infra-bullet">•</span>{feature}</li>
                   ))}
                 </ul>
               </div>
@@ -378,82 +261,265 @@ export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
           )}
         </div>
 
-        {/* Technology Stack - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
+        {/* Nodes */}
+        <div className="infra-section">
           <button
-            onClick={() => toggleSection('techStack')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
+            className={`infra-section-toggle ${expandedSections.nodes ? 'expanded' : ''}`}
+            onClick={() => toggleSection('nodes')}
           >
-            {i18n.infrastructure.technologyStack}
-            <span>{expandedSections.techStack ? '▼' : '▶'}</span>
+            <span>⚙️ {i18n.infrastructure.nodes}</span>
+            <span className="infra-toggle-icon">{expandedSections.nodes ? '▼' : '▶'}</span>
           </button>
-          {expandedSections.techStack && (
-            <div style={{ marginTop: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-              {Object.entries(infra.infrastructure.technology_stack).map(([category, items]) => (
-                <div key={category} style={{ padding: '1rem', backgroundColor: 'rgba(0,255,136,0.05)', borderRadius: '4px', border: '1px solid rgba(0,255,136,0.2)' }}>
-                  <h4 style={{ marginBottom: '0.5rem', color: '#00ff88', textTransform: 'capitalize' }}>
-                    {category === 'virtualization' && '仮想化'}
-                    {category === 'networking' && 'ネットワーク'}
-                    {category === 'storage' && 'ストレージ'}
-                    {category === 'security' && 'セキュリティ'}
-                    {category === 'planned_apps' && '計画中アプリ'}
-                  </h4>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    {(Array.isArray(items) ? items : [items]).map((item, idx) => (
-                      <span key={idx} style={{ display: 'inline-block', padding: '0.3rem 0.6rem', backgroundColor: '#00ff88', color: '#0a0e27', borderRadius: '3px', fontSize: '0.85rem', fontWeight: 'bold' }}>
-                        {item}
+          {expandedSections.nodes && (
+            <div className="infra-section-content">
+              <div className="infra-nodes-grid">
+                {infra.infrastructure.nodes.map(node => (
+                  <div key={node.id} className={`infra-node-card ${expandedNode === node.id ? 'expanded' : ''}`}>
+                    <div
+                      className="infra-node-header"
+                      onClick={() => setExpandedNode(expandedNode === node.id ? null : node.id)}
+                    >
+                      <div>
+                        <h4 className="infra-node-name">{node.name}</h4>
+                        <span className="infra-node-role">{node.role}</span>
+                        <p className="infra-node-hw">{node.hardware}</p>
+                      </div>
+                      <span className="infra-toggle-icon">
+                        {expandedNode === node.id ? '▼' : '▶'}
                       </span>
-                    ))}
+                    </div>
+
+                    {expandedNode === node.id && (
+                      <div className="infra-node-detail">
+                        <p className="infra-node-purpose">{node.purpose}</p>
+
+                        {node.rationale && (
+                          <div className="infra-node-rationale">
+                            <span className="infra-label">{lang === 'ja' ? '設計理由' : 'Rationale'}:</span>
+                            <p>{node.rationale}</p>
+                          </div>
+                        )}
+
+                        <div className="infra-workloads">
+                          <span className="infra-label">{lang === 'ja' ? 'ワークロード' : 'Workloads'}:</span>
+                          {node.workloads.map((wl, idx) => (
+                            <div key={idx} className="infra-workload-item">
+                              <span className="infra-workload-arrow">→</span>
+                              <div>
+                                <strong>{wl.name}</strong>
+                                <span className="infra-workload-type">{wl.type}</span>
+                                {wl.os && <span className="infra-workload-os">{wl.os}</span>}
+                                {wl.purpose && <p className="infra-workload-desc">{wl.purpose}</p>}
+                                {wl.description && <p className="infra-workload-desc">{wl.description}</p>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </div>
 
-        {/* Learning Outcomes - Collapsible */}
-        <div style={{ marginBottom: '2rem' }}>
+        {/* Network Design */}
+        <div className="infra-section">
           <button
-            onClick={() => toggleSection('learning')}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'rgba(0,255,136,0.1)',
-              border: '1px solid #00ff88',
-              borderRadius: '4px',
-              color: '#00ff88',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              fontFamily: 'monospace',
-            }}
+            className={`infra-section-toggle ${expandedSections.network ? 'expanded' : ''}`}
+            onClick={() => toggleSection('network')}
           >
-            📚 {i18n.infrastructure.learningOutcomes}
-            <span>{expandedSections.learning ? '▼' : '▶'}</span>
+            <span>🌐 {i18n.infrastructure.networkDesign}</span>
+            <span className="infra-toggle-icon">{expandedSections.network ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.network && (
+            <div className="infra-section-content">
+              <div className="infra-network-grid">
+                <div className="infra-network-item">
+                  <span className="infra-label">{lang === 'ja' ? 'トポロジー' : 'Topology'}</span>
+                  <p>{infra.infrastructure.network_design.topology}</p>
+                </div>
+                <div className="infra-network-item">
+                  <span className="infra-label">{lang === 'ja' ? 'ゲートウェイ' : 'Gateway'}</span>
+                  <p>{infra.infrastructure.network_design.gateway}</p>
+                </div>
+                <div className="infra-network-item">
+                  <span className="infra-label">DNS</span>
+                  <p>{infra.infrastructure.network_design.dns}</p>
+                </div>
+              </div>
+              <div className="infra-card">
+                <span className="infra-label">{lang === 'ja' ? 'セキュリティ対策' : 'Security'}</span>
+                <ul className="infra-bullet-list">
+                  {infra.infrastructure.network_design.security.map((sec, idx) => (
+                    <li key={idx}><span className="infra-bullet">•</span>{sec}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Security Model */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.security ? 'expanded' : ''}`}
+            onClick={() => toggleSection('security')}
+          >
+            <span>🔐 {i18n.infrastructure.securityModel}</span>
+            <span className="infra-toggle-icon">{expandedSections.security ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.security && (
+            <div className="infra-section-content">
+              <div className="infra-security-grid">
+                <div className="infra-security-card">
+                  <h4 className="infra-security-title">SSH</h4>
+                  <ul className="infra-kv-list">
+                    <li><span>Root {lang === 'ja' ? 'ログイン' : 'Login'}</span><strong>{infra.infrastructure.security_model.ssh.root_login}</strong></li>
+                    <li><span>{lang === 'ja' ? 'パスワード認証' : 'Password Auth'}</span><strong>{infra.infrastructure.security_model.ssh.password_auth}</strong></li>
+                    <li><span>{lang === 'ja' ? '鍵タイプ' : 'Key Type'}</span><strong>{infra.infrastructure.security_model.ssh.key_type}</strong></li>
+                    <li><span>{lang === 'ja' ? 'アクセス方法' : 'Access Method'}</span><strong>{infra.infrastructure.security_model.ssh.access_method}</strong></li>
+                  </ul>
+                </div>
+                <div className="infra-security-card">
+                  <h4 className="infra-security-title">{lang === 'ja' ? '認証' : 'Authentication'}</h4>
+                  <ul className="infra-kv-list">
+                    <li><span>Proxmox</span><strong>{infra.infrastructure.security_model.authentication.proxmox}</strong></li>
+                    <li><span>Linux VM</span><strong>{infra.infrastructure.security_model.authentication.linux_vms}</strong></li>
+                  </ul>
+                </div>
+                <div className="infra-security-card">
+                  <h4 className="infra-security-title">{lang === 'ja' ? 'バックアップ戦略' : 'Backup Strategy'}</h4>
+                  <ul className="infra-bullet-list">
+                    {infra.infrastructure.security_model.backup_strategy.map((strategy, idx) => (
+                      <li key={idx}><span className="infra-bullet">•</span>{strategy}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Roadmap */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.roadmap ? 'expanded' : ''}`}
+            onClick={() => toggleSection('roadmap')}
+          >
+            <span>🚀 {i18n.infrastructure.roadmap}</span>
+            <span className="infra-toggle-icon">{expandedSections.roadmap ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.roadmap && (
+            <div className="infra-section-content">
+              <div className="infra-roadmap">
+                {Object.entries(infra.infrastructure.future_roadmap).map(([phase, data]) => (
+                  <div key={phase} className="infra-roadmap-phase">
+                    <div className="infra-roadmap-header">
+                      <span className="infra-roadmap-label">{roadmapLabels[lang]?.[phase] ?? phase}</span>
+                      <span className="infra-roadmap-status">{data.status}</span>
+                    </div>
+                    <ul className="infra-bullet-list">
+                      {data.components.map((comp, idx) => (
+                        <li key={idx}><span className="infra-bullet">•</span>{comp}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Technology Stack */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.techStack ? 'expanded' : ''}`}
+            onClick={() => toggleSection('techStack')}
+          >
+            <span>🛠️ {i18n.infrastructure.technologyStack}</span>
+            <span className="infra-toggle-icon">{expandedSections.techStack ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.techStack && (
+            <div className="infra-section-content">
+              <div className="infra-tech-grid">
+                {Object.entries(infra.infrastructure.technology_stack).map(([category, items]) => (
+                  <div key={category} className="infra-tech-card">
+                    <h4 className="infra-tech-title">{techStackLabels[lang]?.[category] ?? category}</h4>
+                    <div className="infra-tech-tags">
+                      {(Array.isArray(items) ? items : [items]).map((item, idx) => (
+                        <span key={idx} className="infra-tech-tag">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Operational Practices */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.operations ? 'expanded' : ''}`}
+            onClick={() => toggleSection('operations')}
+          >
+            <span>📋 {i18n.infrastructure.operationalPractices}</span>
+            <span className="infra-toggle-icon">{expandedSections.operations ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.operations && (
+            <div className="infra-section-content">
+              <div className="infra-ops-grid">
+                {Object.entries(infra.infrastructure.operational_practices).map(([key, value]) => (
+                  <div key={key} className="infra-ops-item">
+                    <span className="infra-label">{opsLabels[lang]?.[key] ?? key}</span>
+                    <p>{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Why Proxmox */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.whyProxmox ? 'expanded' : ''}`}
+            onClick={() => toggleSection('whyProxmox')}
+          >
+            <span>❓ {i18n.infrastructure.whyProxmox}</span>
+            <span className="infra-toggle-icon">{expandedSections.whyProxmox ? '▼' : '▶'}</span>
+          </button>
+          {expandedSections.whyProxmox && (
+            <div className="infra-section-content">
+              <ul className="infra-checklist">
+                {infra.infrastructure.why_proxmox.map((reason, idx) => (
+                  <li key={idx} className="infra-checklist-item">
+                    <span className="infra-check-icon">✓</span>
+                    {reason}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Learning Outcomes */}
+        <div className="infra-section">
+          <button
+            className={`infra-section-toggle ${expandedSections.learning ? 'expanded' : ''}`}
+            onClick={() => toggleSection('learning')}
+          >
+            <span>📚 {i18n.infrastructure.learningOutcomes}</span>
+            <span className="infra-toggle-icon">{expandedSections.learning ? '▼' : '▶'}</span>
           </button>
           {expandedSections.learning && (
-            <div style={{ padding: '1rem', marginTop: '1rem' }}>
-              <ul style={{ listStyle: 'none', padding: '0' }}>
+            <div className="infra-section-content">
+              <ul className="infra-checklist">
                 {infra.infrastructure.learning_outcomes.map((outcome, idx) => (
-                  <li key={idx} style={{ marginBottom: '0.5rem', paddingLeft: '1.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '0', color: '#00ff88' }}>→</span>
+                  <li key={idx} className="infra-checklist-item">
+                    <span className="infra-check-icon">→</span>
                     {outcome}
                   </li>
                 ))}

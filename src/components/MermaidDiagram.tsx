@@ -10,19 +10,32 @@ export const MermaidDiagram = ({ chart }: MermaidDiagramProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'dark',
-      themeVariables: {
-        primaryColor: '#1a1f3a',
-        primaryTextColor: '#e5e7eb',
-        primaryBorderColor: '#00ff88',
-        lineColor: '#00ff88',
-        secondaryColor: '#2a3050',
-        tertiaryColor: '#0a0e27',
-        fontFamily: "'JetBrains Mono', 'SF Mono', 'Courier New', monospace",
-        fontSize: '14px',
-      },
+      theme: isDark ? 'dark' : 'default',
+      themeVariables: isDark
+        ? {
+            primaryColor: '#1a1f3a',
+            primaryTextColor: '#e5e7eb',
+            primaryBorderColor: '#00ff88',
+            lineColor: '#00ff88',
+            secondaryColor: '#2a3050',
+            tertiaryColor: '#0a0e27',
+            fontFamily: "'JetBrains Mono', 'SF Mono', 'Courier New', monospace",
+            fontSize: '14px',
+          }
+        : {
+            primaryColor: '#f3f4f6',
+            primaryTextColor: '#1f2937',
+            primaryBorderColor: '#059669',
+            lineColor: '#059669',
+            secondaryColor: '#e5e7eb',
+            tertiaryColor: '#f9fafb',
+            fontFamily: "'JetBrains Mono', 'SF Mono', 'Courier New', monospace",
+            fontSize: '14px',
+          },
       flowchart: {
         htmlLabels: true,
         curve: 'basis',

@@ -4,6 +4,7 @@ import { MermaidDiagram } from '../components/MermaidDiagram';
 
 interface InfrastructurePageProps {
   i18n: any;
+  lang: string;
 }
 
 interface InfrastructureData {
@@ -120,7 +121,7 @@ const opsLabels: Record<string, Record<string, string>> = {
   },
 };
 
-export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
+export const InfrastructurePage = ({ i18n, lang }: InfrastructurePageProps) => {
   const [infra, setInfra] = useState<InfrastructureData | null>(null);
   const [mermaidChart, setMermaidChart] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
@@ -137,8 +138,6 @@ export const InfrastructurePage = ({ i18n }: InfrastructurePageProps) => {
     learning: false,
   });
   const [expandedNode, setExpandedNode] = useState<string | null>(null);
-
-  const lang = document.documentElement.lang || 'ja';
 
   useEffect(() => {
     const loadInfrastructure = async () => {

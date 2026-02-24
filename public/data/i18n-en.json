@@ -40,12 +40,16 @@
   },
   "infrastructure": {
     "title": "Self-Hosted Infrastructure",
+    "architectureDiagram": "Architecture Diagram",
     "designPhilosophy": "Design Philosophy",
     "hypervisor": "Hypervisor",
     "nodes": "Infrastructure Nodes",
     "networkDesign": "Network Design",
     "securityModel": "Security Model",
+    "roadmap": "Roadmap",
     "technologyStack": "Technology Stack",
+    "operationalPractices": "Operational Practices",
+    "whyProxmox": "Why Proxmox?",
     "learningOutcomes": "Learning Outcomes"
   }
 }

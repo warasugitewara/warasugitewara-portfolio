@@ -498,6 +498,500 @@ a:hover {
   51%, 100% { opacity: 0; }
 }
 
+/* Infrastructure Page */
+.infra-page {
+  padding: 2rem 0;
+}
+
+.infra-hero {
+  margin-bottom: 2rem;
+}
+
+.infra-title {
+  font-size: 2.2rem;
+  color: var(--color-neon-green);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.infra-title-icon {
+  font-size: 1.8rem;
+}
+
+.infra-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+}
+
+.infra-overview {
+  margin-bottom: 2.5rem;
+  padding: 1.2rem 1.5rem;
+  background: rgba(16, 185, 129, 0.05);
+  border-left: 3px solid var(--color-neon-green);
+  border-radius: 4px;
+  line-height: 1.8;
+}
+
+.infra-overview p {
+  margin: 0;
+}
+
+/* Sections */
+.infra-section {
+  margin-bottom: 1rem;
+}
+
+.infra-section-toggle {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+  color: var(--color-neon-green);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.infra-section-toggle:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: var(--color-neon-green);
+}
+
+.infra-section-toggle.expanded {
+  border-radius: 6px 6px 0 0;
+  border-bottom-color: transparent;
+}
+
+.infra-toggle-icon {
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.infra-section-content {
+  padding: 1.2rem;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  background: rgba(16, 185, 129, 0.02);
+  animation: infraFadeIn 0.2s ease-out;
+}
+
+@keyframes infraFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Diagram */
+.infra-diagram {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.infra-diagram-svg {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.infra-diagram-svg svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.infra-diagram-loading,
+.infra-diagram-error {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: 2rem;
+}
+
+.infra-diagram-error {
+  color: var(--color-accent);
+}
+
+/* Checklists */
+.infra-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.infra-checklist-item {
+  padding: 0.6rem 0;
+  padding-left: 1.8rem;
+  position: relative;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+}
+
+.infra-checklist-item:last-child {
+  border-bottom: none;
+}
+
+.infra-check-icon {
+  position: absolute;
+  left: 0;
+  color: var(--color-neon-green);
+  font-weight: bold;
+}
+
+/* Cards */
+.infra-card {
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-card-title {
+  color: var(--color-neon-green);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.infra-card-desc {
+  color: var(--color-text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+/* Bullet lists */
+.infra-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+.infra-bullet-list li {
+  padding: 0.3rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.infra-bullet {
+  position: absolute;
+  left: 0;
+  color: var(--color-neon-green);
+}
+
+/* Labels */
+.infra-label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-neon-green);
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Nodes */
+.infra-nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.infra-node-card {
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.03);
+  transition: all 0.2s ease;
+}
+
+.infra-node-card:hover {
+  border-color: var(--color-neon-green);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+}
+
+.infra-node-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infra-node-name {
+  color: var(--color-neon-green);
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.infra-node-role {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-neon-green);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.infra-node-hw {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0.3rem 0 0;
+}
+
+.infra-node-detail {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(16, 185, 129, 0.15);
+  animation: infraFadeIn 0.2s ease-out;
+}
+
+.infra-node-purpose {
+  color: var(--color-text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.infra-node-rationale {
+  margin-bottom: 0.8rem;
+}
+
+.infra-node-rationale p {
+  color: var(--color-text-secondary);
+  margin: 0.3rem 0 0;
+}
+
+/* Workloads */
+.infra-workloads {
+  margin-top: 0.5rem;
+}
+
+.infra-workload-item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+}
+
+.infra-workload-item:last-child {
+  border-bottom: none;
+}
+
+.infra-workload-arrow {
+  color: var(--color-neon-green);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.infra-workload-type {
+  display: inline-block;
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--color-neon-cyan);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  margin-left: 0.4rem;
+}
+
+.infra-workload-os {
+  display: inline-block;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  margin-left: 0.4rem;
+}
+
+.infra-workload-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0.2rem 0 0;
+}
+
+/* Network grid */
+.infra-network-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.infra-network-item {
+  padding: 0.8rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-network-item p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Security grid */
+.infra-security-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.infra-security-card {
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-security-title {
+  color: var(--color-neon-green);
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-kv-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.infra-kv-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+}
+
+.infra-kv-list li:last-child {
+  border-bottom: none;
+}
+
+.infra-kv-list li span {
+  color: var(--color-text-secondary);
+}
+
+/* Roadmap */
+.infra-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.infra-roadmap-phase {
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  border-left: 3px solid var(--color-neon-green);
+}
+
+.infra-roadmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.infra-roadmap-label {
+  font-weight: 700;
+  color: var(--color-neon-green);
+  font-size: 0.95rem;
+}
+
+.infra-roadmap-status {
+  font-size: 0.85rem;
+}
+
+/* Tech stack grid */
+.infra-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.infra-tech-card {
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-tech-title {
+  color: var(--color-neon-green);
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.infra-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.infra-tech-tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: var(--color-neon-green);
+  color: var(--color-bg);
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.infra-tech-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Operations grid */
+.infra-ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.infra-ops-item {
+  padding: 0.8rem;
+  background: rgba(16, 185, 129, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.infra-ops-item p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Light theme overrides for infrastructure */
+[data-theme="light"] .infra-section-toggle {
+  background: rgba(5, 150, 105, 0.06);
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+[data-theme="light"] .infra-section-toggle:hover {
+  background: rgba(5, 150, 105, 0.12);
+}
+
+[data-theme="light"] .infra-section-content {
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+[data-theme="light"] .infra-node-card,
+[data-theme="light"] .infra-security-card,
+[data-theme="light"] .infra-tech-card,
+[data-theme="light"] .infra-network-item,
+[data-theme="light"] .infra-ops-item,
+[data-theme="light"] .infra-roadmap-phase,
+[data-theme="light"] .infra-card {
+  background: rgba(5, 150, 105, 0.04);
+  border-color: rgba(5, 150, 105, 0.15);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header-wrapper {
@@ -543,6 +1037,23 @@ a:hover {
 
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  .infra-nodes-grid,
+  .infra-security-grid,
+  .infra-tech-grid,
+  .infra-network-grid,
+  .infra-ops-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .infra-title {
+    font-size: 1.6rem;
+  }
+
+  .infra-kv-list li {
+    flex-direction: column;
+    gap: 0.2rem;
   }
 }
 

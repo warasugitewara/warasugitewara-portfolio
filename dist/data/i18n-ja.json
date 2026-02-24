@@ -40,12 +40,16 @@
   },
   "infrastructure": {
     "title": "自作鯖構成",
+    "architectureDiagram": "アーキテクチャ図",
     "designPhilosophy": "設計思想",
     "hypervisor": "ハイパーバイザー",
     "nodes": "ノード構成",
     "networkDesign": "ネットワーク設計",
     "securityModel": "セキュリティモデル",
+    "roadmap": "ロードマップ",
     "technologyStack": "技術スタック",
+    "operationalPractices": "運用プラクティス",
+    "whyProxmox": "なぜ Proxmox か",
     "learningOutcomes": "学習成果"
   }
 }
